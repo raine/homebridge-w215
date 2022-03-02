@@ -1,6 +1,6 @@
 {
     "name": "homebridge-w215-kb",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "HomeBridge plugin for dlink DSP w215",
     "main": "dist/accessory.js",
     "scripts": {
