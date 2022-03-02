@@ -24,7 +24,7 @@
         "default": "admin"
       },
       "password": {
-        "title": "Password",
+        "title": "Device PIN",
         "type": "string",
         "required": true,
         "placeholder": "000000"
