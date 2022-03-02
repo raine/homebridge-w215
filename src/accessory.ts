@@ -58,7 +58,7 @@ class PlugAccessory implements AccessoryPlugin {
       this.soapClient.getInternetSettings().then(settings => {
         if (settings) {
           this.log.debug(`Settings retrieved: ${JSON.stringify(settings)}`);
-          this.informationService.updateCharacteristic(hap.Characteristic.Model, settings.hostname)
+          this.informationService.updateCharacteristic(hap.Characteristic.Model, settings.hostname);
           this.informationService.updateCharacteristic(hap.Characteristic.SerialNumber, settings.macAddress);
         }
       });
