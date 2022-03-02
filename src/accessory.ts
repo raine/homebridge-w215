@@ -52,7 +52,10 @@ class PlugAccessory implements AccessoryPlugin {
 
     this.outletService = new hap.Service.Outlet(this.config.name);
     this.temperatureService = new hap.Service.TemperatureSensor(this.config.name + ' Temperature');
-    this.informationService = new hap.Service.AccessoryInformation().setCharacteristic(hap.Characteristic.Manufacturer, 'D-Link');
+    this.informationService = new hap.Service.AccessoryInformation()
+      .setCharacteristic(hap.Characteristic.Manufacturer, 'D-Link')
+      .setCharacteristic(hap.Characteristic.Model, 'DSP-W215')
+      .setCharacteristic(hap.Characteristic.SerialNumber, this.password || 'Default-Serial');
 
     this.authenticate().then(state => {
       this.soapClient.getInternetSettings().then(settings => {
