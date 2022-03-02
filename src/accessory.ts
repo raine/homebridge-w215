@@ -33,7 +33,6 @@ class PlugAccessory implements AccessoryPlugin {
     private config: AccessoryConfig,
     private api: API,
   ) {
-    this.log(JSON.stringify(this.config));
     this.username = this.config.username || 'admin';
     this.password = this.config.password;
     this.plugURL = 'http://' + this.config.host + '/HNAP1';
