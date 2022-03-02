@@ -1,6 +1,6 @@
 {
   "pluginAlias": "DSP-W215",
-  "pluginType": "platform",
+  "pluginType": "accessory",
   "singular": true,
   "schema": {
     "type": "object",

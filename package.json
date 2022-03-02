@@ -2,7 +2,7 @@
     "name": "homebridge-w215-kb",
     "version": "1.0.0",
     "description": "HomeBridge plugin for dlink DSP w215",
-    "main": "dist/index.js",
+    "main": "dist/accessory.js",
     "scripts": {
         "lint": "eslint src/**.ts --max-warnings=0",
         "watch": "npm run build && npm link && nodemon",
@@ -10,11 +10,12 @@
         "prepublishOnly": "npm run lint && npm run build"
     },
     "dependencies": {
-        "hnap": "2.1.0",
-        "import-fresh": "^3.3.0"
+        "then-request": "^6.0.2",
+        "xmldom": "^0.6.0"
     },
     "devDependencies": {
         "@types/node": "^16.10.9",
+        "@types/xmldom": "^0.1.31",
         "@typescript-eslint/eslint-plugin": "^5.0.0",
         "@typescript-eslint/parser": "^5.0.0",
         "eslint": "^8.0.1",
