@@ -65,7 +65,7 @@ class PlugAccessory implements AccessoryPlugin {
 
       this.log.debug(`Initial login state: ${state}`);
       this.soapClient.isReady().then(readyState => {
-        this.log.info(`Ready State: ${readyState ? 'Ready' : 'Not Ready'}`);
+        this.log.debug(`Ready State: ${readyState ? 'Ready' : 'Not Ready'}`);
 
         this.outletService.getCharacteristic(hap.Characteristic.On)
           .on(CharacteristicEventTypes.GET, (callback: CharacteristicGetCallback) => {
@@ -79,7 +79,7 @@ class PlugAccessory implements AccessoryPlugin {
             this.log.debug(`Setting new state: ${newValue}`);
             this.soapClient.setState(newValue as boolean).then(() => {
               this.currentPowerState = newValue as boolean;
-              this.log.info('Current state of the switch was set: ' + (this.currentPowerState ? 'ON' : 'OFF'));
+              this.log.debug('Current state of the switch was set: ' + (this.currentPowerState ? 'ON' : 'OFF'));
               callback();
             });
           });

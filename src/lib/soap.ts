@@ -48,6 +48,9 @@ export class SoapClient {
 
       return this.soapAction(HNAPMethod.Login, body, HNAPResponse.Login).then(response => {
         return (response === 'success');
+      }).catch(err => {
+        this._logError(err);
+        return this.login();
       })
     });
   }
