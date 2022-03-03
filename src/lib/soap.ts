@@ -189,7 +189,18 @@ export class SoapClient {
           return response.getBody(HNAP_BODY_ENCODING);
         },
       ).catch((err) => {
-        this._logError(err);
+        if (method !== HNAPMethod.Login) {
+          return this.login().then(didLogin => {
+            if (didLogin) {
+              return this.soapAction(method, body, responseElement);
+            } else {
+              this._logDebug('Attempted to re-authenticate but did not succeed');
+              this._logError(err);
+            }
+          })
+        } else {
+          this._logError(err);
+        }
       });
   }
 
