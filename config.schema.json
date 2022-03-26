@@ -28,6 +28,12 @@
         "type": "string",
         "required": true,
         "placeholder": "000000"
+      },
+      "temperatureEnabled": {
+        "title": "Temperature sensor enabled",
+        "type": "boolean",
+        "required": true,
+        "placeholder": true
       }
     }
   }

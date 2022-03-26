@@ -17,12 +17,13 @@ export = (api: API) => {
 
 class PlugAccessory implements AccessoryPlugin {
   private readonly outletService: Service;
-  private readonly temperatureService: Service;
+  private readonly temperatureService?: Service;
   private readonly informationService: Service;
 
   private readonly username?: string;
   private readonly password?: string;
   private readonly plugURL?: string;
+  private readonly temperatureEnabled?: boolean;
 
   private currentPowerState?: boolean;
   private currentTemperature?: number;
@@ -35,6 +36,7 @@ class PlugAccessory implements AccessoryPlugin {
   ) {
     this.username = this.config.username || 'admin';
     this.password = this.config.password;
+    this.temperatureEnabled = this.config.temperatureEnabled;
     this.plugURL = 'http://' + this.config.host + '/HNAP1';
 
     this.soapClient = new SoapClient(this.plugURL, this.password!, this.username);
@@ -51,7 +53,11 @@ class PlugAccessory implements AccessoryPlugin {
     };
 
     this.outletService = new hap.Service.Outlet(this.config.name);
-    this.temperatureService = new hap.Service.TemperatureSensor(this.config.name + ' Temperature');
+
+    if (this.temperatureEnabled) {
+      this.temperatureService = new hap.Service.TemperatureSensor(this.config.name + ' Temperature');
+    }
+
     this.informationService = new hap.Service.AccessoryInformation()
       .setCharacteristic(hap.Characteristic.Manufacturer, 'D-Link')
       .setCharacteristic(hap.Characteristic.Model, 'DSP-W215')
@@ -87,14 +93,16 @@ class PlugAccessory implements AccessoryPlugin {
             });
           });
 
-        this.temperatureService.getCharacteristic(hap.Characteristic.CurrentTemperature)
-          .on(CharacteristicEventTypes.GET, (callback: CharacteristicGetCallback) => {
-            this.soapClient.getTemperature().then(temperature => {
-              this.currentTemperature = temperature;
-              this.log.debug('Current temperature of the switch was returned: ' + temperature);
-              callback(undefined, this.currentTemperature);
+        if (this.temperatureService) {
+          this.temperatureService.getCharacteristic(hap.Characteristic.CurrentTemperature)
+            .on(CharacteristicEventTypes.GET, (callback: CharacteristicGetCallback) => {
+              this.soapClient.getTemperature().then(temperature => {
+                this.currentTemperature = temperature;
+                this.log.debug('Current temperature of the switch was returned: ' + temperature);
+                callback(undefined, this.currentTemperature);
+              });
             });
-          });
+        }
       });
     });
   }
@@ -107,7 +115,7 @@ class PlugAccessory implements AccessoryPlugin {
     return [
       this.informationService,
       this.outletService,
-      this.temperatureService,
+      ...(this.temperatureService ? [this.temperatureService] : []),
     ];
   }
 
