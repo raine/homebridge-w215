@@ -1,6 +1,6 @@
 {
     "name": "homebridge-w215-arto",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "HomeBridge plugin for dlink DSP w215",
     "main": "dist/accessory.js",
     "scripts": {
