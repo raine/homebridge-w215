@@ -82,6 +82,9 @@ class PlugAccessory implements AccessoryPlugin {
               this.currentPowerState = isOn;
               this.log.debug('Current state of the switch was returned: ' + (isOn ? 'ON' : 'OFF'));
               callback(undefined, this.currentPowerState);
+            }).catch(err => {
+              this.log.error('Failed to get on state', err.stack || err.message);
+              callback(err);
             });
           })
           .on(CharacteristicEventTypes.SET, (newValue: CharacteristicValue, callback: CharacteristicSetCallback) => {
@@ -90,6 +93,9 @@ class PlugAccessory implements AccessoryPlugin {
               this.currentPowerState = newValue as boolean;
               this.log.debug('Current state of the switch was set: ' + (this.currentPowerState ? 'ON' : 'OFF'));
               callback();
+            }).catch(err => {
+              this.log.error('Failed to set on state', err.stack || err.message);
+              callback(err);
             });
           });
 
@@ -100,6 +106,9 @@ class PlugAccessory implements AccessoryPlugin {
                 this.currentTemperature = temperature;
                 this.log.debug('Current temperature of the switch was returned: ' + temperature);
                 callback(undefined, this.currentTemperature);
+              }).catch(err => {
+                this.log.error('Failed to get temperature', err.stack || err.message);
+                callback(err);
               });
             });
         }
